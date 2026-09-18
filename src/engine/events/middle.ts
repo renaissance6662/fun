@@ -1,0 +1,108 @@
+import type { GameEvent } from '../types';
+
+/** 中年：50-64 岁。开始有人先走，也开始被人称作「老师」。 */
+export const MIDDLE_EVENTS: readonly GameEvent[] = [
+  {
+    id: 'kid-rebel',
+    kicker: '五十二岁',
+    minAge: 46,
+    maxAge: 58,
+    weight: 13,
+    cond: (s) => s.hasFlag('has_child'),
+    text: '孩子把房门关上了，隔着门说了一句你听不懂的话。你在门外站了一会儿。',
+    options: [
+      { label: '敲开门，先听他说', fx: { joy: 6, charm: 5, physique: -2 }, flags: ['good_parent'], text: '你们聊到凌晨。你第一次发现他已经在想一些你没想过的事。' },
+      { label: '用你父母对你的方式处理', fx: { joy: -8, charm: -4 }, flags: ['strict_parent'], text: '门没再开。你们之后很多年都客客气气的。' },
+      { label: '什么都不说，给他留点吃的', fx: { joy: 2, charm: 2 }, text: '半夜你听见厨房有动静。你没开灯。' },
+    ],
+  },
+  {
+    id: 'parent-gone',
+    kicker: '五十五岁',
+    minAge: 48,
+    maxAge: 62,
+    auto: true,
+    weight: 12,
+    milestone: true,
+    text: '医院的走廊很长。医生出来的时候，你已经在心里把这句话演练过很多次了。',
+    options: [
+      { label: '继续', fx: { joy: -14, intellect: 4, wealth: -4 }, flags: ['orphan'], text: '整理遗物的时候，你在一本旧书里找到了自己小学的一张奖状。他留了几十年。' },
+    ],
+  },
+  {
+    id: 'hypertension',
+    kicker: '五十五岁',
+    minAge: 50,
+    maxAge: 60,
+    auto: true,
+    weight: 12,
+    text: '血压有点高。医生说这次是提醒，不是警告。',
+    options: [{ label: '继续', fx: { physique: -7, joy: -3, intellect: 2 }, flags: ['chronic'] , text: '你买了个血压计，头两周每天量，第三周开始想不起来。' }],
+  },
+  {
+    id: 'optimized',
+    kicker: '五十六岁',
+    minAge: 50,
+    maxAge: 60,
+    weight: 11,
+    cond: (s) => !s.hasFlag('civil_servant') && !s.hasFlag('founder'),
+    text: '公司开始优化「结构性冗余」。你的名字出现在一份没有署名的名单上。',
+    options: [
+      { label: '争取留下，接受降薪', fx: { wealth: -8, joy: -6, physique: -3 }, flags: ['survivor'], text: '你留下来了，工位挪到了靠里的那一排。' },
+      { label: '拿了补偿走人', fx: { wealth: 5, joy: 5, physique: 3 }, text: '你提前体验了退休，发现居然还不错。' },
+      { label: '转去带新人', fx: { charm: 7, intellect: 4, wealth: -4, joy: 4 }, flags: ['mentor'], text: '你带出来的那些人，后来每年都来看你。' },
+    ],
+  },
+  {
+    id: 'old-friend-gone',
+    kicker: '六十二岁',
+    minAge: 56,
+    maxAge: 70,
+    auto: true,
+    weight: 10,
+    text: '群里发了一条消息，说老李走了。你们上个月还约过饭。',
+    options: [
+      { label: '继续', fx: { joy: -8, intellect: 3 }, flags: ['mortal'], text: '你翻出高中的毕业照，一个一个认，有三个名字你一时想不起来了。' },
+    ],
+  },
+  {
+    id: 'hobby-class',
+    kicker: '五十八岁',
+    minAge: 54,
+    maxAge: 64,
+    weight: 10,
+    text: '社区活动中心贴了一张新的报名表，上面有七八个班。',
+    options: [
+      { label: '报一个，认识点新人', fx: { joy: 8, charm: 6, physique: 3 }, flags: ['social_elder'], text: '你成了那个班里话最多的人。' },
+      { label: '去公园自己练', fx: { physique: 6, joy: 4 }, text: '你摸清了公园里每一个时间段的人都是谁。' },
+      { label: '在家待着', fx: { joy: -4, physique: -3 }, text: '电视从早开到晚，大部分时间你没在看。' },
+    ],
+  },
+  {
+    id: 'retire',
+    kicker: '六十岁',
+    minAge: 58,
+    maxAge: 63,
+    weight: 15,
+    milestone: true,
+    text: '最后一天上班。你把抽屉清空，发现里面有一堆用不上的东西。',
+    options: [
+      { label: '体面告别，跟大家吃顿饭', fx: { joy: 8, charm: 5, wealth: -3 }, flags: ['retired'], text: '饭桌上有人说，真没想到你也走了。你笑着说，早晚的事。' },
+      { label: '悄悄走，不留话', fx: { joy: 3, charm: -3 }, flags: ['retired'], text: '你抱着一个纸箱出了门，没回头。' },
+    ],
+  },
+  {
+    id: 'late-call',
+    kicker: '六十三岁',
+    minAge: 60,
+    maxAge: 70,
+    weight: 9,
+    cond: (s) => s.hasFlag('has_child'),
+    text: '孩子打电话来，说工作上遇到了很难的事，问你该怎么办。',
+    options: [
+      { label: '把经验讲给他听', fx: { joy: 7, charm: 4 }, flags: ['good_parent'], text: '讲完你才发现，你当年也没人可问。' },
+      { label: '只说一句：回来吃饭吧', fx: { joy: 9, charm: 3, wealth: -3 }, text: '他周末真的回来了，吃了两碗饭。' },
+      { label: '告诉他自己的路自己走', fx: { joy: -5, intellect: 3 }, text: '挂了电话你有点后悔，但你没再打过去。' },
+    ],
+  },
+];

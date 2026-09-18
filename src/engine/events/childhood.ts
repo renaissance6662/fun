@@ -1,0 +1,116 @@
+import type { GameEvent } from '../types';
+
+/** 幼年：0-6 岁。这一阶段的选项不会毁掉什么，但会决定你成为什么样的小孩。 */
+export const CHILDHOOD_EVENTS: readonly GameEvent[] = [
+  {
+    id: 'birth',
+    kicker: '出生',
+    minAge: 0,
+    maxAge: 0,
+    weight: 100,
+    auto: true,
+    milestone: true,
+    text: '你出生在{origin}。{originDesc}',
+    options: [
+      { label: '继续', fx: {}, text: '大夫把你抱出来的时候，走廊上有人在打电话报喜，也有人在等一个坏消息。' },
+    ],
+  },
+  {
+    id: 'grab-week',
+    kicker: '周岁',
+    minAge: 1,
+    maxAge: 1,
+    weight: 20,
+    milestone: true,
+    text: '满周岁那天，桌上摆了一圈东西，亲戚们围着你，像在看一场没有剧本的赌局。',
+    options: [
+      { label: '抓那本书', fx: { intellect: 7, joy: -1 }, flags: ['bookish_kid'], text: '你妈松了口气，你爸说这不算数。' },
+      { label: '抓那个算盘', fx: { wealth: 7, charm: -1 }, flags: ['money_kid'], text: '一屋子人笑得很响，说这孩子将来是要做生意的。' },
+      { label: '抓口红', fx: { charm: 7, intellect: -1 }, text: '你把它举得高高的，所有人都在拍手。' },
+    ],
+  },
+  {
+    id: 'first-word',
+    kicker: '两岁',
+    minAge: 2,
+    maxAge: 2,
+    auto: true,
+    text: '你终于开口了，全家人屏住呼吸等着听。',
+    options: [
+      { label: '继续', fx: { joy: 4 }, text: '第一个词是「不要」。这个字你跟它打了一辈子的交道。' },
+    ],
+  },
+  {
+    id: 'walk',
+    kicker: '一岁半',
+    minAge: 1,
+    maxAge: 2,
+    auto: true,
+    weight: 8,
+    text: '你扶着沙发站起来，松手，往前迈了两步。',
+    options: [{ label: '继续', fx: { physique: 5, joy: 3 }, text: '摔在垫子上，爬起来接着走。' }],
+  },
+  {
+    id: 'fever',
+    kicker: '四岁',
+    minAge: 3,
+    maxAge: 6,
+    auto: true,
+    weight: 6,
+    text: '半夜烧到三十九度。',
+    options: [
+      { label: '继续', fx: { physique: -4, joy: -2 }, text: '你爸背着你走了很远的一段路，天亮时他的衬衫是湿的。' },
+    ],
+  },
+  {
+    id: 'kindergarten',
+    kicker: '三岁',
+    minAge: 3,
+    maxAge: 4,
+    weight: 14,
+    text: '幼儿园第一天。门在你身后关上，你妈的脸从窗口越走越远。',
+    options: [
+      { label: '放声大哭', fx: { joy: -4, charm: 3 }, flags: ['clingy'], text: '老师抱了你一上午。你被记住了。' },
+      { label: '抢别人手里的积木', fx: { physique: 4, charm: -3 }, flags: ['bully'], text: '你赢了，也第一次知道「不是好孩子」这句话有多重。' },
+      { label: '蹲在角落看别人玩', fx: { intellect: 5, charm: -2 }, flags: ['observer'], text: '你学会了先看，再动。这个习惯跟了你很久。' },
+    ],
+  },
+  {
+    id: 'stray-cat',
+    kicker: '五岁',
+    minAge: 4,
+    maxAge: 6,
+    weight: 10,
+    text: '楼道里蹲着一只很脏的小猫，抬头看你，喉咙里有一点声音。',
+    options: [
+      { label: '抱回家', fx: { joy: 7, charm: 2 }, flags: ['loves_animals'], text: '它在你家住了十一年，最后是你抱着它去的医院。' },
+      { label: '把口袋里的饼干给它', fx: { joy: 4 }, text: '你蹲在外面看了它二十分钟才回家。' },
+      { label: '假装没看见', fx: { joy: -3 }, text: '你回头看了一眼，它还在那儿。' },
+    ],
+  },
+  {
+    id: 'family-performance',
+    kicker: '六岁',
+    minAge: 5,
+    maxAge: 6,
+    weight: 12,
+    text: '年夜饭吃到一半，有人起哄：来，给大家表演一个。',
+    options: [
+      { label: '背一首诗', fx: { intellect: 5, charm: 3 }, text: '你背完，筷子都停了。那一刻你第一次尝到被注视的滋味。' },
+      { label: '跳一段刚学的舞', fx: { charm: 6, joy: 3 }, text: '跳错了两个动作，但笑声是善意的。' },
+      { label: '躲到大人身后', fx: { joy: -3, intellect: 3 }, text: '你盯着地板的花纹，把它记住了。' },
+    ],
+  },
+  {
+    id: 'toy-taken',
+    kicker: '五岁',
+    minAge: 4,
+    maxAge: 6,
+    weight: 8,
+    text: '亲戚家的孩子抢走了你最喜欢的那个玩具，大人在旁边笑。',
+    options: [
+      { label: '抢回来', fx: { physique: 5, joy: 2, charm: -3 }, flags: ['assertive'], text: '两个大人都愣住了。你妈晚上悄悄说你做得对。' },
+      { label: '算了，给他', fx: { joy: -5, charm: 3 }, flags: ['people-pleaser'], text: '「懂事」。这个词你以后会听到很多次。' },
+    ],
+  },
+];
