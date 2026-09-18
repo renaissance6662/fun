@@ -146,7 +146,9 @@ export const TEEN_EVENTS: readonly GameEvent[] = [
     minAge: 15,
     maxAge: 17,
     weight: 7,
-    cond: (s) => s.hasFlag('merchant') || s.stats.wealth > 55,
+    // 原来这里写的是 hasFlag('merchant')，但 merchant 是出身 id，不是标签 ——
+    // 出身目前不产出标签，所以这个条件永远为假，等于把「跟着父母搬家」这条线整段埋掉了。
+    cond: (s) => s.hasFlag('rich_kid') || s.stats.wealth > 55,
     text: '父母决定搬家，你要换一所学校，还有一个学期就高考。',
     options: [
       { label: '跟着走', fx: { joy: -6, charm: -3, intellect: 4 }, text: '新学校的人已经有了各自的小圈子。你花了很久才挤进去。' },

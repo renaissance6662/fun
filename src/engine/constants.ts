@@ -127,6 +127,8 @@ export const FLAG_LABELS: Record<string, string> = {
   dreamer: '爱做梦',
   thorny: '记仇',
   just: '见不得不公',
+  loved: '在一起过',
+  what_if: '有过如果',
   coward: '后悔过一次',
   brave_heart: '敢开口',
   quiet_heart: '放在心里',

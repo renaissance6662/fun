@@ -34,6 +34,7 @@ export const CHILDHOOD_EVENTS: readonly GameEvent[] = [
     kicker: '两岁',
     minAge: 2,
     maxAge: 2,
+    weight: 8,
     auto: true,
     text: '你终于开口了，全家人屏住呼吸等着听。',
     options: [

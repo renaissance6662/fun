@@ -166,19 +166,24 @@ function advance(state: GameState, rng: Rng): GameState {
   if (age > state.lifespan) {
     const event = rng.pick(FINAL_EVENTS);
     const frame = state.frame + 1;
-    return { ...state, age, pending: { event, frame }, frame };
+    return { ...state, age, pending: { event, frame }, frame, rngState: rng.state };
   }
 
   if (age >= 22 && rng.chance(0.18)) {
     const event = rng.pick(ACCIDENTS);
     const frame = state.frame + 1;
-    return { ...state, age, pending: { event, frame }, frame };
+    return { ...state, age, pending: { event, frame }, frame, rngState: rng.state };
   }
 
   const moved: GameState = { ...state, age };
   const event = drawEvent(moved, rng);
   const frame = state.frame + 1;
-  return { ...moved, pending: { event, frame }, frame };
+  // rngState 必须在这里写回：抽事件也消耗了随机数。
+  // 忘了这一句的话，下一回合会从同一个位置重新取数 ——
+  // 幼年（1-16 岁）和老年（75 岁后）的衰老结算不掷骰，
+  // 一旦选项也没有 risk，整个回合的游标就原地不动，
+  // 于是那几年会反复用同一个随机数抽事件，随机性直接退化成固定顺序。
+  return { ...moved, pending: { event, frame }, frame, rngState: rng.state };
 }
 
 function markUsed(state: GameState, event: GameEvent): string[] {

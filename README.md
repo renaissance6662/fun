@@ -18,6 +18,7 @@ npm run build        # 类型检查 + 生产构建
 npm run preview      # 预览构建产物
 npm run check        # 引擎平衡自检，见下
 npm run check:render # 组件渲染冒烟测试
+npm run check:audit  # 内容审计：找那些不会崩、只会让游戏悄悄变味的问题
 ```
 
 ## 它是什么样的游戏
@@ -102,6 +103,12 @@ scripts/
 ```
 
 `risk` 是成功率百分比，失败走 `fail` 分支。`auto: true` 表示纯叙述、不需要选择。改完跑一遍 `npm run check` 看看平衡有没有被带偏。
+
+## 已知的小问题（没改，等你决定）
+
+- **高考的「低分线」几乎是死内容。** `gaokao-low` 要求 18 岁时智力 < 38，但实测 18 岁智力中位数是 59、最低也有 27 —— 三千局里只有 0.4% 能走到「读专科 / 直接进社会」那两条路。想把这三条线摊匀，阈值要从 38 提到 46 上下。
+- **复制分享文案依赖 `navigator.clipboard`**，它只在 https 或 localhost 下可用。纯 http 打开时按钮会安静地什么都不做。
+- `EVENT_INDEX`、`isZeroDelta`、`Rng.shuffle` 目前没有调用方，属于预留 API。
 
 ## 后面可以做什么
 

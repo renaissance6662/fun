@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "check": "node scripts/run-check.mjs",
-    "check:render": "node scripts/run-render-check.mjs"
+    "check:render": "node scripts/run-render-check.mjs",
+    "check:audit": "node scripts/run-audit.mjs"
   },
   "dependencies": {
     "react": "^19.3.0",

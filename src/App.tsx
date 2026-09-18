@@ -43,6 +43,10 @@ export default function App() {
 
       {state.phase === 'start' ? (
         <StartScreen
+          // key 换一颗种子就重建一次：天赋卡片的选中态是组件内部 state，
+          // 不重建的话「换一段人生」之后没有任何一张卡片是选中的，
+          // 点「出生」却会用上第一张卡的天赋 —— 界面上看到的和实际生效的对不上。
+          key={state.seed}
           origin={state.origin}
           candidates={state.candidates}
           seed={state.seed}
